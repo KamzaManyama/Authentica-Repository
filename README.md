@@ -1,81 +1,54 @@
-Authentica
+# React + TypeScript + Vite
 
-Overview
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Authentica is a product verification system designed to combat counterfeit goods by allowing users to scan and validate products using a secure One-Time Password (OTP) system. The platform ensures transparency in the supply chain and enables users to report counterfeit or expired products.
-Features
-Product Authentication: Users can scan product QR codes to verify authenticity.
-OTP Verification: Secure 5-digit OTP for product validation.
-Reporting System: Users can report counterfeit or expired products along with store details.
-User Dashboard: Clean and simple UI with bottom navigation for easy access.
-Crate Management: Stores handle crates, ensuring batch verification at scale.
-Admin Controls: Oversee reports, verify claims, and manage the database.
+Currently, two official plugins are available:
 
-User Roles
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-1. User
-Scans individual products to verify authenticity.
-Manually enters a 5-digit OTP for validation.
-Reports counterfeit or expired products.
-Views scan history and reports.
+## Expanding the ESLint configuration
 
-2. Store
-Scans and verifies crates of products.
-Ensures the legitimacy of bulk shipments.
-Registers with a unique store ID for verification.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-3. Admin
-Manages product database and verification logs.
-Reviews and resolves reported product issues.
-Oversees store and user activities.
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-Installation
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-Prerequisites
-Node.js & npm (Ensure the latest version is installed)
-Tailwind CSS for styling
-MySQL/PostgreSQL for the database
-Setup
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-Clone the repository
-
-git clone https://github.com/yourusername/authentica.git
-cd authentica
-
-Install dependencies
-
-npm install
-Setup Tailwind CSS
-npx tailwindcss init -p
-Run the development server
-npm run dev
-
-Database Migration
-Configure the database connection in .env file.
-Run migration script:
-npm run migrate
-
-Technologies Used
-
-Frontend: Vite, React.js, Tailwind CSS
-Backend: Node.js, Express.js
-Database: MySQL/PostgreSQL
-Authentication: OTP-based verification
-Cloud Storage: AWS S3 (for logs and product reports)
-
-Future Enhancements
-AI-powered counterfeit detection.
-Blockchain integration for immutable verification records.
-Multi-language support for global reach.
-Store performance insights and analytics.
-
-Contributing
-
-Feel free to contribute! Fork the repo and submit a pull request.
-License
-
-This project is licensed under the MIT License.
-Contact
-
-For any inquiries or support, reach out to:
-📧 Email: kmanyama009@gmail.com,, bayandamlomo1@gmail.com,, thamidwane17@gmail.com,,  🌐 Website: Authentica
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
+```
